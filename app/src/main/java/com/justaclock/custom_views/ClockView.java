@@ -1,4 +1,4 @@
-package com.justaclock;
+package com.justaclock.custom_views;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,6 +9,8 @@ import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
+
+import com.justaclock.R;
 
 import java.util.Calendar;
 

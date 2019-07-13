@@ -1,21 +1,33 @@
 package com.justaclock.activities
 
-import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
 import android.os.Handler
+import android.util.Log
+import com.justaclock.R
+import com.justaclock.tools.BaseActivity
 
-class SplashActivity : Activity() {
+class SplashActivity: BaseActivity() {
+    companion object {
+        private val TAG: String = this::class.java.simpleName
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun getLayout(): Int {
+        return R.layout.activity_splash
+    }
 
+    override fun initUI() {
+        goToMainActivity()
+    }
+
+    private fun goToMainActivity() {
         Handler().postDelayed({
-            /*
-             * Go to ClockActivity
-             */
-            startActivity(Intent(this, ClockActivity::class.java))
+            try{
+                startActivity(Intent(this, MainActivity::class.java))
+                overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
 
+            }catch (e: Exception) {
+                Log.e(TAG, e.message)
+            }
         }, 1000)
     }
 }

@@ -43,6 +43,18 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
     implementation "android.arch.lifecycle:extensions:1.1.1"
     kapt "android.arch.lifecycle:compiler:1.1.1"
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    /*
+     * Lottie
+     */
+    implementation 'com.airbnb.android:lottie:3.0.1'
+
+    /*
+     * Clock
+     */
+    implementation 'com.github.alxrm:animated-clock-icon:1.0.2'
+    implementation 'com.github.leondzn:simple-analog-clock:1.0.1'
 }
 repositories {
     mavenCentral()

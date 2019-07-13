@@ -19,27 +19,27 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txtv_current_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Fri, 5 Jul"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/txtv_current_time" />
+        app:layout_constraintTop_toBottomOf="@+id/txtv_current_time"
+        tools:text="13 jul, 2019" />
 
     <TextView
         android:id="@+id/txtv_current_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="19:15"
         android:textColor="@color/colorWhite"
         android:textSize="56sp"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/txtv_title" />
+        app:layout_constraintTop_toBottomOf="@+id/txtv_title"
+        tools:text="19:15" />
 
     <com.leondzn.simpleanalogclock.SimpleAnalogClock
         android:id="@+id/clock"
@@ -74,10 +74,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="14dp"
         android:fontFamily="sans-serif-thin"
-        android:text="00"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/txtv_current_time"
-        app:layout_constraintTop_toTopOf="@+id/txtv_current_time" />
+        app:layout_constraintTop_toTopOf="@+id/txtv_current_time"
+        tools:text="06" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

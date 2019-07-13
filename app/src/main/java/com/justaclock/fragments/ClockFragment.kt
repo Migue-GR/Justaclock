@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.justaclock.R
 import com.justaclock.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_clock.*
+import java.text.DateFormat
 import java.util.*
 
 class ClockFragment: Fragment() {
@@ -26,7 +27,7 @@ class ClockFragment: Fragment() {
     val handler = Handler()
 
     companion object {
-        private val TAG: String = this::class.java.simpleName
+        val TAG: String = ClockFragment::class.java.simpleName
         fun newInstance(): ClockFragment = ClockFragment()
     }
 
@@ -41,7 +42,7 @@ class ClockFragment: Fragment() {
         /*
          * Set current fragment
          */
-        mainViewModel?.currentFragment?.value = TAG
+        mainViewModel?.currentFragment = TAG
         startClock()
 
         return view
@@ -57,6 +58,10 @@ class ClockFragment: Fragment() {
                     val seconds = Calendar.getInstance().get(Calendar.SECOND)
                     val millis  = Calendar.getInstance().get(Calendar.MILLISECOND)
 
+                    val calendar: Calendar = Calendar.getInstance()
+                    val currentDate: String = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.time)
+
+                    txtv_current_date.text = currentDate
                     clock.setTime(hour, minutes, seconds, millis)
 
                     if(minutes < 10){

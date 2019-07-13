@@ -16,7 +16,7 @@ class TimerFragment : Fragment() {
     private var mainViewModel: MainViewModel? = null
 
     companion object {
-        private val TAG: String = this::class.java.simpleName
+        val TAG: String = TimerFragment::class.java.simpleName
         fun newInstance(): TimerFragment = TimerFragment()
     }
 
@@ -31,7 +31,7 @@ class TimerFragment : Fragment() {
         /*
          * Set current fragment
          */
-        mainViewModel?.currentFragment?.value = TAG
+        mainViewModel?.currentFragment = TAG
 
         return view
     }

@@ -34,7 +34,11 @@ class MainActivity: BaseActivity() {
 
         setRippleEffects()
         setOnClickListeners()
-        createFragment(ClockFragment.newInstance())
+
+        if (mainViewModel?.isTheFirstTimeInTheApp!!) {
+            createFragment(ClockFragment.newInstance())
+            mainViewModel?.isTheFirstTimeInTheApp = false
+        }
     }
 
     private fun setRippleEffects() {
@@ -66,20 +70,28 @@ class MainActivity: BaseActivity() {
 
     private fun setOnClickListeners() {
         try {
-            cyt_clock.setOnClickListener{
-                createFragment(ClockFragment.newInstance())
+            cyt_clock.setOnClickListener {
+                if (mainViewModel?.currentFragment != ClockFragment.TAG) {
+                    createFragment(ClockFragment.newInstance())
+                }
             }
 
-            cyt_alarm.setOnClickListener{
-                createFragment(AlarmFragment.newInstance())
+            cyt_alarm.setOnClickListener {
+                if (mainViewModel?.currentFragment != AlarmFragment.TAG) {
+                    createFragment(AlarmFragment.newInstance())
+                }
             }
 
-            cyt_timer.setOnClickListener{
-                createFragment(TimerFragment.newInstance())
+            cyt_timer.setOnClickListener {
+                if (mainViewModel?.currentFragment != TimerFragment.TAG) {
+                    createFragment(TimerFragment.newInstance())
+                }
             }
 
-            cyt_stopwatch.setOnClickListener{
-                createFragment(StopwatchFragment.newInstance())
+            cyt_stopwatch.setOnClickListener {
+                if (mainViewModel?.currentFragment != StopwatchFragment.TAG) {
+                    createFragment(StopwatchFragment.newInstance())
+                }
             }
 
         } catch (e: Exception) {

@@ -16,7 +16,7 @@ class StopwatchFragment: Fragment() {
     private var mainViewModel: MainViewModel? = null
 
     companion object {
-        private val TAG: String = this::class.java.simpleName
+        val TAG: String = StopwatchFragment::class.java.simpleName
         fun newInstance(): StopwatchFragment = StopwatchFragment()
     }
 
@@ -31,7 +31,7 @@ class StopwatchFragment: Fragment() {
         /*
          * Set current fragment
          */
-        mainViewModel?.currentFragment?.value = TAG
+        mainViewModel?.currentFragment = TAG
 
         return view
     }

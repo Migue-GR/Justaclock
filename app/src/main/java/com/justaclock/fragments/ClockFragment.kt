@@ -89,6 +89,7 @@ class ClockFragment: Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mainViewModel?.lastFragment = TAG
         handler.removeCallbacksAndMessages(null)
     }
 }

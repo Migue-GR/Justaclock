@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cyt_clock"
         android:layout_width="0dp"
-        android:layout_height="88dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/cyt_alarm"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.5"
@@ -37,9 +37,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:text="Clock"
             android:textColor="@color/colorWhite"
             android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/imgv_ic_clock"
             app:layout_constraintStart_toStartOf="@+id/imgv_ic_clock"
             app:layout_constraintTop_toBottomOf="@+id/imgv_ic_clock" />
@@ -48,7 +50,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cyt_alarm"
         android:layout_width="0dp"
-        android:layout_height="88dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/cyt_timer"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.5"
@@ -72,9 +74,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:text="Alarm"
             android:textColor="@color/colorWhite"
             android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/imgv_ic_alarm"
             app:layout_constraintStart_toStartOf="@+id/imgv_ic_alarm"
             app:layout_constraintTop_toBottomOf="@+id/imgv_ic_alarm" />
@@ -83,7 +87,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cyt_timer"
         android:layout_width="0dp"
-        android:layout_height="88dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/cyt_stopwatch"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.5"
@@ -107,9 +111,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:text="Timer"
             android:textColor="@color/colorWhite"
             android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/imgv_ic_timer"
             app:layout_constraintStart_toStartOf="@+id/imgv_ic_timer"
             app:layout_constraintTop_toBottomOf="@+id/imgv_ic_timer" />
@@ -118,7 +124,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cyt_stopwatch"
         android:layout_width="0dp"
-        android:layout_height="88dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.5"
@@ -142,9 +148,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:text="Stopwatch"
             android:textColor="@color/colorWhite"
             android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/imgv_ic_stopwatch"
             app:layout_constraintStart_toStartOf="@+id/imgv_ic_stopwatch"
             app:layout_constraintTop_toBottomOf="@+id/imgv_ic_stopwatch" />

@@ -35,4 +35,9 @@ class AlarmFragment: Fragment() {
 
         return view
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mainViewModel?.lastFragment = TAG
+    }
 }

@@ -55,6 +55,12 @@ dependencies {
      */
     implementation 'com.github.alxrm:animated-clock-icon:1.0.2'
     implementation 'com.github.leondzn:simple-analog-clock:1.0.1'
+
+    /*
+     * CardView
+     */
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
 }
 repositories {
     mavenCentral()

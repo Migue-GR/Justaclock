@@ -22,8 +22,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.ChronometerActivity" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

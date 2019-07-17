@@ -2,6 +2,7 @@ package com.justaclock.fragments
 
 import android.os.Bundle
 import android.os.SystemClock
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.Slide
 import androidx.transition.TransitionManager
 import com.justaclock.R
 import com.justaclock.adapters.Task
@@ -48,8 +50,6 @@ class StopwatchFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        TransitionManager.beginDelayedTransition(fragment_stopwatch)
         startChronometer()
 
         if(chronometerViewModel?.chronometerIsRunning == false && chronometerViewModel!!.lastTimeString != "00:00:00"){
@@ -85,20 +85,24 @@ class StopwatchFragment: Fragment() {
         }
 
         fab_stop_stopwatch.setOnClickListener {
+            TransitionManager.beginDelayedTransition(fragment_stopwatch, Slide(Gravity.BOTTOM))
             fab_stop_stopwatch.hide()
             fab_play_stopwatch.setImageResource(R.drawable.ic_play_button_24dp)
             chronometerViewModel!!.lastTimeString = "00:00:00"
             val taskName  = edtx_task.editText?.text ?: ""
 
             chronometer.stop()
-            chronometerViewModel?.insertTask(Task(taskName.toString(), chronometer.text as String))
+            chronometerViewModel?.insertTask(Task(taskName.toString(), chronometer.text as String, false))
             chronometer.text = "00:00:00"
             chronometerViewModel!!.timeWhenPause       = 0
             chronometerViewModel?.chronometerIsRunning = false
         }
 
         fragment_stopwatch.setOnClickListener{
-            edtx_task.clearFocus()
+//            edtx_task.clearFocus()
+            val adapter: TaskAdapter = rcv_tasks.adapter as TaskAdapter
+            adapter.getTasks()[0].preview = false
+            adapter.notifyItemChanged(0)
         }
 
         setObservers()

@@ -12,7 +12,7 @@ import com.justaclock.R
 import kotlinx.android.synthetic.main.recycler_view_item.view.*
 import java.lang.Exception
 
-data class Task(var name: String, val time: String)
+data class Task(var name: String, val time: String, var preview: Boolean)
 
 class TaskAdapter(private val tasks: ArrayList<Task>, private val context: Context): RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,13 +34,25 @@ class TaskAdapter(private val tasks: ArrayList<Task>, private val context: Conte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val task: Task = tasks[position]
 
-        if ((position + 1) % 2 == 0) {
-            holder.cyt_bg_task_item.setBackgroundResource(R.drawable.gradient_blue)
+        if(task.preview){
+            if ((position + 1) % 2 == 0) {
+                holder.cyt_bg_task_item.setBackgroundResource(R.drawable.bg_puntued_task)
 //            holder.cyt_bg_task_item.setBackgroundResource(R.drawable.gradient_yelllow)
 
-        } else {
+            } else {
 //            holder.cyt_bg_task_item.setBackgroundResource(R.drawable.gradient_yelllow)
-            holder.cyt_bg_task_item.setBackgroundResource(R.drawable.gradient_blue)
+                holder.cyt_bg_task_item.setBackgroundResource(R.drawable.bg_puntued_task_yellow)
+            }
+
+        }else{
+            if ((position + 1) % 2 == 0) {
+                holder.cyt_bg_task_item.setBackgroundResource(R.drawable.gradient_blue)
+//            holder.cyt_bg_task_item.setBackgroundResource(R.drawable.gradient_yelllow)
+
+            } else {
+//            holder.cyt_bg_task_item.setBackgroundResource(R.drawable.gradient_yelllow)
+                holder.cyt_bg_task_item.setBackgroundResource(R.drawable.gradient_yelllow)
+            }
         }
 
         if(task.name.isEmpty()){

@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
-    android:padding="8dp">
+    android:background="@color/colorPrimary">
 
     <androidx.cardview.widget.CardView
         android:layout_width="200dp"
         android:layout_height="100dp"
-        app:cardBackgroundColor="#53CDFF"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

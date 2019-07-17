@@ -17,21 +17,12 @@ public class ChronometerViewModel extends AndroidViewModel {
         super(application);
         tasks = new MutableLiveData<>();
         tasks.setValue(new ArrayList<>());
-        tasks.getValue().add(new Task("dog cero", "00:0:00"));
-        tasks.getValue().add(new Task("dog uno", "00:10:00"));
-        tasks.getValue().add(new Task("dog dos", "00:20:00"));
-        tasks.getValue().add(new Task("dog tres", "00:30:00"));
-        tasks.getValue().add(new Task("dog cuatro", "00:40:00"));
-        tasks.getValue().add(new Task("dog cinco", "00:50:00"));
-        tasks.getValue().add(new Task("dog seis", "01:00:00"));
-        tasks.getValue().add(new Task("dog siete", "01:10:00"));
-        tasks.getValue().add(new Task("dog ocho", "01:20:00"));
-        tasks.getValue().add(new Task("dog nueve", "01:30:00"));
-        tasks.getValue().add(new Task("dog diez", "01:40:00"));
+        tasks.getValue().add(new Task("Example task", "00:00:00", true));
+        tasks.getValue().add(new Task("Example task", "00:00:00", true));
     }
 
     public void insertTask(Task task){
-        tasks.getValue().add(new Task(task.getName(), task.getTime()));
+        tasks.getValue().add(new Task(task.getName(), task.getTime(), false));
         tasks.setValue(tasks.getValue());
     }
 }

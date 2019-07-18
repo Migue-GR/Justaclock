@@ -21,25 +21,44 @@
 
     <Chronometer
         android:id="@+id/chronometer"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="sans-serif-medium"
-        android:textAlignment="center"
+        android:textAlignment="textEnd"
         android:textColor="@color/colorWhite"
         android:textSize="36sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toStartOf="@+id/clock_of_task_timer"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/txtv_title_stopwatch"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <rm.com.clocks.ClockImageView
+        android:id="@+id/clock_of_task_timer"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        app:clockColor="#BBFFFFFF"
+        app:frameWidth="regular"
+        app:hours="16"
+        app:indeterminateSpeed="2"
+        app:layout_constraintBottom_toBottomOf="@+id/chronometer"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/chronometer"
+        app:layout_constraintTop_toTopOf="@+id/chronometer"
+        app:minutes="20"
+        app:pointerWidth="thin"
+        app:timeSetDuration="400" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_tasks"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:minHeight="116dp"
         android:orientation="horizontal"
@@ -57,45 +76,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
+        app:layout_constraintGuide_percent="0.1" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_play_stopwatch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rcv_tasks"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:srcCompat="@drawable/ic_play_button_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_stop_stopwatch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/fab_play_stopwatch"
-        app:layout_constraintEnd_toStartOf="@+id/fab_play_stopwatch"
-        app:layout_constraintTop_toTopOf="@+id/fab_play_stopwatch"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/fab_play_stopwatch"
+        app:layout_constraintEnd_toEndOf="@+id/fab_play_stopwatch"
+        app:layout_constraintStart_toStartOf="@+id/fab_play_stopwatch"
+        app:layout_constraintTop_toBottomOf="@+id/rcv_tasks"
         app:srcCompat="@drawable/ic_stop_black_24dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edtx_task"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="32dp"
         android:theme="@style/MyTextInputLayout"
-        app:layout_constraintBottom_toBottomOf="@+id/fab_play_stopwatch"
-        app:layout_constraintEnd_toStartOf="@+id/fab_stop_stopwatch"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/rcv_tasks"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/rcv_tasks">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -114,6 +130,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.85" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

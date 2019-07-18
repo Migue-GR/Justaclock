@@ -19,30 +19,24 @@ import com.justaclock.viewmodels.ChronometerViewModel
 import com.justaclock.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_stopwatch.*
 
-class StopwatchFragment: Fragment() {
-    /*
-     * ViewModels
-     */
+class TaskTimerFragment: Fragment() {
+    /* ViewModels**/
     private var mainViewModel: MainViewModel? = null
     private var chronometerViewModel: ChronometerViewModel? = null
 
     companion object {
-        val TAG: String = StopwatchFragment::class.java.simpleName
-        fun newInstance(): StopwatchFragment = StopwatchFragment()
+        val TAG: String = TaskTimerFragment::class.java.simpleName
+        fun newInstance(): TaskTimerFragment = TaskTimerFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_stopwatch, container, false)
 
-        /*
-         * Instance ViewModels
-         */
+        /* Instance ViewModels **/
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
         chronometerViewModel = ViewModelProviders.of(activity!!).get(ChronometerViewModel::class.java)
 
-        /*
-         * Set current fragment
-         */
+        /* Set current fragment **/
         mainViewModel?.currentFragment = TAG
 
         return view
@@ -50,37 +44,43 @@ class StopwatchFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        startChronometer()
+        initChronometer()
 
-        if(chronometerViewModel?.chronometerIsRunning == false && chronometerViewModel!!.lastTimeString != "00:00:00"){
+        val awa = chronometerViewModel?.chronometerIsRunning
+        val ewe = chronometerViewModel!!.lastTimeString
+        if(chronometerViewModel?.chronometerIsRunning == true && chronometerViewModel!!.lastTimeString != "00:00:00"){
             chronometer.text = chronometerViewModel?.lastTimeString ?: "00:00:00"
-            fab_play_stopwatch.setImageResource(R.drawable.ic_play_button_24dp)
-            fab_stop_stopwatch.show()
 
-            if(mainViewModel?.lastFragment == TAG){
+            if(mainViewModel?.lastFragment == TAG) {
+
+                startChronometer()
+
+            } else {
+                chronometerViewModel!!.timeWhenPause -= SystemClock.elapsedRealtime()
+
+                clock_of_task_timer?.animateIndeterminate()
                 fab_play_stopwatch.setImageResource(R.drawable.ic_pause_white_24dp)
                 fab_stop_stopwatch.show()
-                chronometer.base = SystemClock.elapsedRealtime() + chronometerViewModel!!.timeWhenPause
+                chronometer.base = chronometerViewModel!!.timeWhenPause + SystemClock.elapsedRealtime()
                 chronometer.start()
                 chronometerViewModel!!.timeWhenPause = 0
                 chronometerViewModel?.chronometerIsRunning = true
+//                startChronometer()
+//                pauseChronometer()
             }
         }
 
         fab_play_stopwatch.setOnClickListener{
             if(chronometerViewModel?.chronometerIsRunning == true){
+                clock_of_task_timer.stop()
                 fab_play_stopwatch.setImageResource(R.drawable.ic_play_button_24dp)
+//                pauseChronometer()
                 chronometerViewModel?.timeWhenPause = chronometer.base - SystemClock.elapsedRealtime()
-                chronometer.stop()
                 chronometerViewModel?.chronometerIsRunning = false
+                chronometer.stop()
 
             }else{
-                fab_play_stopwatch.setImageResource(R.drawable.ic_pause_white_24dp)
-                fab_stop_stopwatch.show()
-                chronometer.base = SystemClock.elapsedRealtime() + chronometerViewModel!!.timeWhenPause
-                chronometer.start()
-                chronometerViewModel!!.timeWhenPause = 0
-                chronometerViewModel?.chronometerIsRunning = true
+                startChronometer()
             }
         }
 
@@ -99,7 +99,6 @@ class StopwatchFragment: Fragment() {
         }
 
         fragment_stopwatch.setOnClickListener{
-//            edtx_task.clearFocus()
             val adapter: TaskAdapter = rcv_tasks.adapter as TaskAdapter
             adapter.getTasks()[0].preview = false
             adapter.notifyItemChanged(0)
@@ -121,9 +120,25 @@ class StopwatchFragment: Fragment() {
         })
     }
 
+    private fun pauseChronometer(){
+        clock_of_task_timer?.stop()
+        fab_play_stopwatch.setImageResource(R.drawable.ic_play_button_24dp)
+        fab_stop_stopwatch.show()
+    }
+
+    private fun startChronometer(){
+        clock_of_task_timer?.animateIndeterminate()
+        fab_play_stopwatch.setImageResource(R.drawable.ic_pause_white_24dp)
+        fab_stop_stopwatch.show()
+//        chronometer.base = SystemClock.elapsedRealtime() + chronometerViewModel!!.timeWhenPause
+        chronometer.base = chronometerViewModel!!.timeWhenPause + SystemClock.elapsedRealtime()
+        chronometer.start()
+        chronometerViewModel!!.timeWhenPause = 0
+        chronometerViewModel?.chronometerIsRunning = true
+    }
+
     private fun updateItemsOfRecyclerView() {
         val adapter: TaskAdapter = rcv_tasks.adapter as TaskAdapter
-//        adapter.notifyDataSetChanged()
         adapter.notifyItemInserted(adapter.getTasks().lastIndex)
     }
 
@@ -132,7 +147,7 @@ class StopwatchFragment: Fragment() {
         rcv_tasks.adapter       = TaskAdapter(tasks, activity!!)
     }
 
-    private fun startChronometer() {
+    private fun initChronometer() {
         chronometer.setOnChronometerTickListener {chronometer ->
             val time = SystemClock.elapsedRealtime() - chronometer.base
             val h    = (time / 3600000).toInt()
@@ -145,11 +160,13 @@ class StopwatchFragment: Fragment() {
         chronometer.base = SystemClock.elapsedRealtime()
         chronometer.text = "00:00:00"
         chronometer.stop()
-        chronometerViewModel?.chronometerIsRunning = false
+
+//        chronometerViewModel?.chronometerIsRunning = false
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        /* Set last fragment **/
         mainViewModel?.lastFragment = TAG
 
         if(chronometerViewModel?.chronometerIsRunning == true){

@@ -6,7 +6,7 @@ import com.justaclock.fragments.ClockFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.lifecycle.ViewModelProviders
 import com.justaclock.fragments.AlarmFragment
-import com.justaclock.fragments.StopwatchFragment
+import com.justaclock.fragments.TaskTimerFragment
 import com.justaclock.fragments.TimerFragment
 import com.justaclock.tools.BaseActivity
 import com.justaclock.viewmodels.MainViewModel
@@ -89,8 +89,8 @@ class MainActivity: BaseActivity() {
             }
 
             cyt_stopwatch.setOnClickListener {
-                if (mainViewModel?.currentFragment != StopwatchFragment.TAG) {
-                    createFragment(StopwatchFragment.newInstance())
+                if (mainViewModel?.currentFragment != TaskTimerFragment.TAG) {
+                    createFragment(TaskTimerFragment.newInstance())
                 }
             }
 

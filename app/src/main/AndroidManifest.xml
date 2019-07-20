@@ -25,6 +25,8 @@
         <activity
             android:name=".activities.MainActivity"
             android:windowSoftInputMode="adjustPan" />
+
+        <receiver android:name=".receivers.AlarmNotificationReceiver"/>
     </application>
 
 </manifest>

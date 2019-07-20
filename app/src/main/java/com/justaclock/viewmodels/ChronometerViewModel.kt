@@ -1,6 +1,7 @@
 package com.justaclock.viewmodels
 
 import android.app.Application
+import android.text.Editable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.justaclock.adapters.Task
@@ -13,6 +14,7 @@ class ChronometerViewModel(application: Application) : AndroidViewModel(applicat
     var lastTimeString: String? = null
     var base: Long? = null
     var beforeItWasOnPause: Boolean = false
+    var taskName: Editable? = null
 
     init {
         tasks.value = ArrayList()

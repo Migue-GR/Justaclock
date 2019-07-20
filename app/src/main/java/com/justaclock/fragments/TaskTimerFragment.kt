@@ -2,6 +2,7 @@ package com.justaclock.fragments
 
 import android.os.Bundle
 import android.os.SystemClock
+import android.text.Editable
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -47,13 +48,17 @@ class TaskTimerFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initChronometer()
 
+        if(chronometerViewModel?.taskName != null){
+            edtx_task.editText?.text = chronometerViewModel?.taskName
+        }
+
         chronometer.text = chronometerViewModel?.lastTimeString ?: "00:00:00"
 
         if(chronometerViewModel?.chronometerIsRunning == true){
             chronometerViewModel?.timeWhenPause = chronometerViewModel?.base!! - SystemClock.elapsedRealtime()
             startChronometer()
 
-        }else{
+        }else if(chronometer.text != "00:00:00"){
             pauseChronometer()
         }
 
@@ -117,6 +122,7 @@ class TaskTimerFragment: Fragment() {
         chronometerViewModel!!.timeWhenPause       = 0
         chronometerViewModel?.chronometerIsRunning = false
         chronometerViewModel?.base = null
+        edtx_task.editText?.text = Editable.Factory.getInstance().newEditable("")
     }
 
     private fun initializeRecyclerView(tasks : ArrayList<Task>) {
@@ -126,7 +132,22 @@ class TaskTimerFragment: Fragment() {
 
     private fun addItemToRecyclerView() {
         val adapter: TaskAdapter = rcv_tasks.adapter as TaskAdapter
-        adapter.notifyItemInserted(adapter.getTasks().lastIndex)
+//        adapter.notifyItemInserted(adapter.getTasks().lastIndex)
+        if(adapter.getTasks().size == 2){
+            if(adapter.getTasks()[0].preview){
+                adapter.getTasks()[0].name = adapter.getTasks()[1].name
+                adapter.getTasks()[0].time = adapter.getTasks()[1].time
+                adapter.getTasks()[0].preview = false
+                adapter.getTasks().removeAt(1)
+                adapter.notifyItemChanged(0)
+
+            }else{
+                adapter.notifyItemInserted(adapter.getTasks().lastIndex)
+            }
+
+        }else{
+            adapter.notifyItemInserted(adapter.getTasks().lastIndex)
+        }
     }
 
     private fun initChronometer() {
@@ -160,9 +181,9 @@ class TaskTimerFragment: Fragment() {
 
         fragment_stopwatch.setOnClickListener{
 //remove this
-            val adapter: TaskAdapter = rcv_tasks.adapter as TaskAdapter
-            adapter.getTasks()[0].preview = false
-            adapter.notifyItemChanged(0)
+//            val adapter: TaskAdapter = rcv_tasks.adapter as TaskAdapter
+//            adapter.getTasks()[0].preview = false
+//            adapter.notifyItemChanged(0)
         }
     }
 
@@ -179,6 +200,7 @@ class TaskTimerFragment: Fragment() {
             chronometerViewModel?.timeWhenPause = chronometerViewModel?.base ?: 0 - SystemClock.elapsedRealtime()
         }
 
-        chronometerViewModel!!.lastTimeString = chronometer.text as String
+        chronometerViewModel?.lastTimeString = chronometer.text as String
+        chronometerViewModel?.taskName = edtx_task.editText?.text
     }
 }

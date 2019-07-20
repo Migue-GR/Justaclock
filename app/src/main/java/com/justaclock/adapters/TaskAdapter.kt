@@ -12,7 +12,7 @@ import com.justaclock.R
 import kotlinx.android.synthetic.main.recycler_view_item.view.*
 import java.lang.Exception
 
-data class Task(var name: String, val time: String, var preview: Boolean)
+data class Task(var name: String, var time: String, var preview: Boolean)
 
 class TaskAdapter(private val tasks: ArrayList<Task>, private val context: Context): RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -18,11 +18,15 @@ import com.justaclock.adapters.TaskAdapter
 import com.justaclock.viewmodels.ChronometerViewModel
 import com.justaclock.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_task_timer.*
+import java.lang.Exception
 
 class TaskTimerFragment: Fragment() {
     /* ViewModels**/
     private var mainViewModel: MainViewModel? = null
     private var chronometerViewModel: ChronometerViewModel? = null
+
+    /* Vars **/
+    val handler = Handler()
 
     companion object {
         val TAG: String = TaskTimerFragment::class.java.simpleName
@@ -143,9 +147,14 @@ class TaskTimerFragment: Fragment() {
 
         val adapter: TaskAdapter = rcv_tasks.adapter as TaskAdapter
 
-        Handler().postDelayed({
-            if(adapter.getTasks().size >= 1){
-                rcv_tasks.smoothScrollToPosition(adapter.getTasks().lastIndex)
+        handler.postDelayed({
+            try {
+                if(adapter.getTasks().size >= 1){
+                    rcv_tasks.smoothScrollToPosition(adapter.getTasks().lastIndex)
+                }
+
+            }catch (e: Exception){
+                Log.e(TAG, e.message)
             }
         }, 400)
     }
@@ -216,5 +225,6 @@ class TaskTimerFragment: Fragment() {
 
         chronometerViewModel?.lastTimeString = chronometer.text as String
         chronometerViewModel?.taskName = edtx_task.editText?.text
+        handler.removeCallbacksAndMessages(null)
     }
 }

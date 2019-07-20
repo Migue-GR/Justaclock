@@ -3,6 +3,7 @@
     android:shape="rectangle">
 
     <stroke android:dashWidth="10dp" android:dashGap="10dp" android:color="#FFB856" android:width="2dp" />
+    <solid android:color="@color/colorPrimary" />
     <corners android:radius="20dp" />
 
 </shape>

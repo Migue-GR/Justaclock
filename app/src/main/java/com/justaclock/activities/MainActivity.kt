@@ -45,22 +45,22 @@ class MainActivity: BaseActivity() {
         try {
             cyt_clock.background = getRippleEffect(
                     resources.getColor(R.color.colorAccent, null),
-                    resources.getDrawable(R.drawable.bg_corner_top_right_20dp_primary_dark, null)
+                    resources.getDrawable(R.drawable.bg_corner_top_right_20dp_primary, null)
             )
 
             cyt_alarm.background = getRippleEffect(
                     resources.getColor(R.color.colorAccent, null),
-                    resources.getDrawable(R.drawable.bg_solid_primary_dark, null)
+                    resources.getDrawable(R.drawable.bg_solid_primary, null)
             )
 
             cyt_timer.background = getRippleEffect(
                     resources.getColor(R.color.colorAccent, null),
-                    resources.getDrawable(R.drawable.bg_solid_primary_dark, null)
+                    resources.getDrawable(R.drawable.bg_solid_primary, null)
             )
 
-            cyt_stopwatch.background = getRippleEffect(
+            cyt_task_timer.background = getRippleEffect(
                     resources.getColor(R.color.colorAccent, null),
-                    resources.getDrawable(R.drawable.bg_corner_bottom_right_20dp_primary_dark, null)
+                    resources.getDrawable(R.drawable.bg_corner_bottom_right_20dp_primary, null)
             )
 
         } catch (e: Exception) {
@@ -88,7 +88,7 @@ class MainActivity: BaseActivity() {
                 }
             }
 
-            cyt_stopwatch.setOnClickListener {
+            cyt_task_timer.setOnClickListener {
                 if (mainViewModel?.currentFragment != TaskTimerFragment.TAG) {
                     createFragment(TaskTimerFragment.newInstance())
                 }

@@ -11,6 +11,8 @@ class ChronometerViewModel(application: Application) : AndroidViewModel(applicat
     var chronometerIsRunning: Boolean = false
     var timeWhenPause: Long = 0
     var lastTimeString: String? = null
+    var base: Long? = null
+    var beforeItWasOnPause: Boolean = false
 
     init {
         tasks.value = ArrayList()

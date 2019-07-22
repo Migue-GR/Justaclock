@@ -6,6 +6,24 @@
     android:background="@color/colorPrimary">
 
     <TextView
+        android:id="@+id/txtv_coming_soon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="sans-serif-thin"
+        android:text="Coming soon."
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtv_title_timer"
+        app:layout_constraintVertical_bias="0.19999999" />
+
+    <TextView
         android:id="@+id/txtv_title_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

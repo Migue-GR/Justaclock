@@ -49,8 +49,8 @@ class AlarmFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         txtv_title_alarm.setOnClickListener{
-            Toast.makeText(context, "awa", Toast.LENGTH_SHORT).show()
-            startAlarm()
+//            Toast.makeText(context, "awa", Toast.LENGTH_SHORT).show()
+//            startAlarm()
         }
     }
 

@@ -32,39 +32,11 @@ class MainActivity: BaseActivity() {
          */
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        setRippleEffects()
         setOnClickListeners()
 
         if (mainViewModel?.isTheFirstTimeInTheApp!!) {
             createFragment(ClockFragment.newInstance())
             mainViewModel?.isTheFirstTimeInTheApp = false
-        }
-    }
-
-    private fun setRippleEffects() {
-        try {
-            cyt_clock.background = getRippleEffect(
-                    resources.getColor(R.color.colorAccent, null),
-                    resources.getDrawable(R.drawable.bg_corner_top_right_20dp_primary, null)
-            )
-
-            cyt_alarm.background = getRippleEffect(
-                    resources.getColor(R.color.colorAccent, null),
-                    resources.getDrawable(R.drawable.bg_solid_primary, null)
-            )
-
-            cyt_timer.background = getRippleEffect(
-                    resources.getColor(R.color.colorAccent, null),
-                    resources.getDrawable(R.drawable.bg_solid_primary, null)
-            )
-
-            cyt_task_timer.background = getRippleEffect(
-                    resources.getColor(R.color.colorAccent, null),
-                    resources.getDrawable(R.drawable.bg_corner_bottom_right_20dp_primary, null)
-            )
-
-        } catch (e: Exception) {
-            Log.e(TAG, e.message)
         }
     }
 

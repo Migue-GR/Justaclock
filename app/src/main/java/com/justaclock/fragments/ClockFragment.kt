@@ -1,3 +1,7 @@
+/**
+ * @author Migue-GR
+ */
+
 package com.justaclock.fragments
 
 import android.annotation.SuppressLint
@@ -15,15 +19,11 @@ import kotlinx.android.synthetic.main.fragment_clock.*
 import java.text.DateFormat
 import java.util.*
 
-class ClockFragment: Fragment() {
-    /*
-     * ViewModels
-     */
+class ClockFragment : Fragment() {
+    /** Declare ViewModels */
     private var mainViewModel: MainViewModel? = null
 
-    /*
-     * Vars
-     */
+    /** Declare objects */
     val handler = Handler()
 
     companion object {
@@ -34,14 +34,10 @@ class ClockFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_clock, container, false)
 
-        /*
-         * Instance ViewModels
-         */
+        /** Instantiate ViewModels */
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-        /*
-         * Set current fragment
-         */
+        /** Set current fragment */
         mainViewModel?.currentFragment = TAG
         startClock()
 
@@ -53,28 +49,25 @@ class ClockFragment: Fragment() {
             @SuppressLint("SetTextI18n")
             override fun run() {
                 try {
-                    val hour    = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+                    val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
                     val minutes = Calendar.getInstance().get(Calendar.MINUTE)
                     val seconds = Calendar.getInstance().get(Calendar.SECOND)
-                    val millis  = Calendar.getInstance().get(Calendar.MILLISECOND)
-
+                    val millis = Calendar.getInstance().get(Calendar.MILLISECOND)
                     val calendar: Calendar = Calendar.getInstance()
                     val currentDate: String = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.time)
 
                     txtv_current_date.text = currentDate
                     clock.setTime(hour, minutes, seconds, millis)
 
-                    if(minutes < 10){
+                    if (minutes < 10) {
                         txtv_current_time.text = "$hour:0$minutes"
-
-                    }else{
-                        txtv_current_time.text    = "$hour:$minutes"
+                    } else {
+                        txtv_current_time.text = "$hour:$minutes"
                     }
 
-                    if(seconds < 10){
+                    if (seconds < 10) {
                         txtv_current_seconds.text = "0$seconds"
-
-                    }else{
+                    } else {
                         txtv_current_seconds.text = "$seconds"
                     }
 
@@ -89,7 +82,9 @@ class ClockFragment: Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        /** Set last fragment */
         mainViewModel?.lastFragment = TAG
+        /** Remove callbacks from [handler] */
         handler.removeCallbacksAndMessages(null)
     }
 }

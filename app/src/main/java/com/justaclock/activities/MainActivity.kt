@@ -1,3 +1,7 @@
+/**
+ * @author Migue-GR
+ */
+
 package com.justaclock.activities
 
 import android.util.Log
@@ -12,10 +16,8 @@ import com.justaclock.tools.BaseActivity
 import com.justaclock.viewmodels.MainViewModel
 import kotlin.Exception
 
-class MainActivity: BaseActivity() {
-    /*
-     * ViewModels
-     */
+class MainActivity : BaseActivity() {
+    /** Declare ViewModels */
     private var mainViewModel: MainViewModel? = null
 
     companion object {
@@ -27,17 +29,15 @@ class MainActivity: BaseActivity() {
     }
 
     override fun initUI() {
-        /*
-         * Instance ViewModels
-         */
+        /** Instantiate ViewModels */
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-
-        setOnClickListeners()
 
         if (mainViewModel?.isTheFirstTimeInTheApp!!) {
             createFragment(ClockFragment.newInstance())
             mainViewModel?.isTheFirstTimeInTheApp = false
         }
+
+        setOnClickListeners()
     }
 
     private fun setOnClickListeners() {

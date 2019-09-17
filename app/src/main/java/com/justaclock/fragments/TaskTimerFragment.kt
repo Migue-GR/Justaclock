@@ -12,10 +12,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.TransitionManager
 import com.justaclock.R
 import com.justaclock.adapters.Task
 import com.justaclock.adapters.TaskAdapter
@@ -53,8 +55,11 @@ class TaskTimerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initChronometer()
+
         if (chronometerViewModel?.taskName != null) {
             edtx_task.editText?.text = chronometerViewModel?.taskName
+            txtv_task_label.text = chronometerViewModel?.taskName
         }
 
         chronometer.text = chronometerViewModel?.lastTimeString ?: "00:00:00"
@@ -66,7 +71,6 @@ class TaskTimerFragment : Fragment() {
             pauseChronometer()
         }
 
-        initChronometer()
         setObservers()
         setOnclickListeners()
     }
@@ -102,6 +106,7 @@ class TaskTimerFragment : Fragment() {
 
     private fun setOnclickListeners() {
         fab_play_task_timer.setOnClickListener {
+            TransitionManager.beginDelayedTransition(fragment_task_timer)
             if (chronometerViewModel?.chronometerIsRunning == true) {
                 pauseChronometer2()
             } else {
@@ -111,6 +116,21 @@ class TaskTimerFragment : Fragment() {
 
         fab_stop_task_timer.setOnClickListener {
             stopChronometer()
+        }
+
+        chronometer.setOnClickListener {
+            val keyframeTwo = ConstraintSet()
+            keyframeTwo.clone(context, R.layout.fragment_task_timer_2)
+            TransitionManager.beginDelayedTransition(fragment_task_timer)
+            keyframeTwo.applyTo(fragment_task_timer)
+        }
+
+        clock_of_task_timer.setOnClickListener {
+            val keyframeTwo = ConstraintSet()
+            keyframeTwo.clone(context, R.layout.fragment_task_timer_land_content)
+            TransitionManager.beginDelayedTransition(fragment_task_timer)
+            keyframeTwo.applyTo(fragment_task_timer)
+            fab_stop_task_timer.show()
         }
     }
 
@@ -163,11 +183,12 @@ class TaskTimerFragment : Fragment() {
         chronometerViewModel?.chronometerIsRunning = false
         chronometerViewModel?.base = null
         edtx_task.editText?.text = Editable.Factory.getInstance().newEditable("")
+        txtv_task_label.text = ""
         chronometerViewModel?.beforeItWasOnPause = false
     }
 
     private fun initializeRecyclerView(tasks : ArrayList<Task>) {
-        rcv_tasks.layoutManager = LinearLayoutManager(activity!!, LinearLayoutManager.HORIZONTAL, true)
+        rcv_tasks.layoutManager = LinearLayoutManager(activity!!, LinearLayoutManager.HORIZONTAL, false)
         rcv_tasks.adapter = TaskAdapter(tasks, activity!!, txtv_tasks_empty)
 
         val adapter: TaskAdapter = rcv_tasks.adapter as TaskAdapter

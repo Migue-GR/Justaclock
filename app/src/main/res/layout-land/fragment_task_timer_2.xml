@@ -1,55 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_task_timer"
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/fragment_task_timer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context=".fragments.TaskTimerFragment">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/txtv_title_task_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:text="Task timer"
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Chronometer
         android:id="@+id/chronometer"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="sans-serif-medium"
         android:textAlignment="textStart"
         android:textColor="@color/colorWhite"
         android:textSize="36sp"
-        app:layout_constraintEnd_toStartOf="@+id/clock_of_task_timer"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/rcv_tasks" />
+        app:layout_constraintEnd_toStartOf="parent"
+        tools:layout_editor_absoluteY="48dp" />
 
     <rm.com.clocks.ClockImageView
         android:id="@+id/clock_of_task_timer"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_centerInParent="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:clockColor="#BBFFFFFF"
         app:frameWidth="regular"
         app:hours="12"
         app:indeterminateSpeed="2"
-        app:layout_constraintBottom_toBottomOf="@+id/chronometer"
+        app:layout_constraintBottom_toTopOf="@+id/txtv_task_label"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/chronometer"
-        app:layout_constraintTop_toTopOf="@+id/chronometer"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
         app:minutes="0"
         app:pointerWidth="thin"
         app:timeSetDuration="400" />
@@ -58,16 +56,14 @@
         android:id="@+id/rcv_tasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:minHeight="116dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:minHeight="106dp"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".50"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtv_title_task_timer"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chronometer"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:itemCount="1"
+        tools:itemCount="9"
         tools:layoutManager="LinearLayoutManager"
         tools:listitem="@layout/recycler_view_item" />
 
@@ -82,25 +78,26 @@
         android:id="@+id/fab_play_task_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        app:rippleColor="#FFF"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fab_stop_task_timer"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtx_task"
+        app:layout_constraintVertical_bias="1.0"
+        app:rippleColor="#FFF"
         app:srcCompat="@drawable/ic_play_button_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_stop_task_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:visibility="gone"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="@+id/fab_play_task_timer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/fab_play_task_timer"
+        app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fab_play_task_timer"
         app:rippleColor="#FFF"
         app:srcCompat="@drawable/ic_stop_black_24dp"
@@ -108,13 +105,13 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edtx_task"
-        android:layout_width="0dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:theme="@style/MyTextInputLayout"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/chronometer">
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rcv_tasks">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -144,17 +141,18 @@
 
     <TextView
         android:id="@+id/txtv_task_label"
-        android:layout_width="250dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:maxLength="180"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/edtx_task"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edtx_task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/clock_of_task_timer"
         tools:text="@tools:sample/lorem/random" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -162,6 +160,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.85" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

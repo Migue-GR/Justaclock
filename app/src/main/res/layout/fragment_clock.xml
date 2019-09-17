@@ -43,7 +43,8 @@
 
     <com.leondzn.simpleanalogclock.SimpleAnalogClock
         android:id="@+id/clock"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent=".5"
         android:layout_height="200dp"
         android:layout_margin="16dp"
         android:layout_marginStart="8dp"

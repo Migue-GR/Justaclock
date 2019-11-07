@@ -13,8 +13,9 @@ class ChronometerViewModel(application: Application) : AndroidViewModel(applicat
     var timeWhenPause: Long = 0
     var lastTimeString: String? = null
     var base: Long? = null
+    var focusMode: Boolean = false
     var beforeItWasOnPause: Boolean = false
-    var taskName: Editable? = null
+    var taskName: MutableLiveData<String?> = MutableLiveData()
 
     init {
         tasks.value = ArrayList()

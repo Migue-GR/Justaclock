@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
 import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,15 +22,17 @@ import androidx.transition.TransitionManager
 import com.justaclock.R
 import com.justaclock.adapters.Task
 import com.justaclock.adapters.TaskAdapter
+import com.justaclock.tools.toEditable
 import com.justaclock.viewmodels.ChronometerViewModel
 import com.justaclock.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_task_timer.*
+import kotlinx.android.synthetic.main.fragment_task_timer_content.*
 import java.lang.Exception
 
 class TaskTimerFragment : Fragment() {
     /** Declare ViewModels */
     private var mainViewModel: MainViewModel? = null
-    private var chronometerViewModel: ChronometerViewModel? = null
+    private lateinit var chronometerViewModel: ChronometerViewModel
 
     /** Declare objects */
     private val handler = Handler()
@@ -57,15 +60,33 @@ class TaskTimerFragment : Fragment() {
 
         initChronometer()
 
-        if (chronometerViewModel?.taskName != null) {
-            edtx_task.editText?.text = chronometerViewModel?.taskName
-            txtv_task_label.text = chronometerViewModel?.taskName
+        edtx_task.editText!!.addTextChangedListener(object: TextWatcher {
+            override fun afterTextChanged(editable: Editable?) {
+                val text = editable?.toString() ?: ""
+
+                if (text.isNotEmpty()) {
+                    chronometerViewModel.taskName.value = text
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                /** Implementation not necessary */
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                /** Implementation not necessary */
+            }
+        })
+
+        if (chronometerViewModel.taskName.value != null) {
+            edtx_task.editText?.text = chronometerViewModel.taskName.value?.toEditable()
+            txtv_task_label.text = chronometerViewModel.taskName.value
         }
 
-        chronometer.text = chronometerViewModel?.lastTimeString ?: "00:00:00"
+        chronometer.text = chronometerViewModel.lastTimeString ?: "00:00:00"
 
-        if (chronometerViewModel?.chronometerIsRunning == true) {
-            chronometerViewModel?.timeWhenPause = chronometerViewModel?.base!! - SystemClock.elapsedRealtime()
+        if (chronometerViewModel.chronometerIsRunning) {
+            chronometerViewModel.timeWhenPause = chronometerViewModel.base!! - SystemClock.elapsedRealtime()
             startChronometer()
         } else if (chronometer.text != "00:00:00") {
             pauseChronometer()
@@ -76,7 +97,7 @@ class TaskTimerFragment : Fragment() {
     }
 
     private fun setObservers() {
-        chronometerViewModel?.tasks?.observe(this, Observer {
+        chronometerViewModel.tasks.observe(this, Observer {
             if (it != null) {
                 if (rcv_tasks.adapter == null) {
                     initializeRecyclerView(it)
@@ -89,6 +110,12 @@ class TaskTimerFragment : Fragment() {
                 txtv_tasks_empty.visibility = View.VISIBLE
             } else {
                 txtv_tasks_empty.visibility = View.GONE
+            }
+        })
+
+        chronometerViewModel.taskName.observe(this, Observer { taskName ->
+            if (taskName != null && taskName.isNotEmpty()) {
+                txtv_task_label.text = taskName
             }
         })
     }
@@ -107,7 +134,7 @@ class TaskTimerFragment : Fragment() {
     private fun setOnclickListeners() {
         fab_play_task_timer.setOnClickListener {
             TransitionManager.beginDelayedTransition(fragment_task_timer)
-            if (chronometerViewModel?.chronometerIsRunning == true) {
+            if (chronometerViewModel.chronometerIsRunning) {
                 pauseChronometer2()
             } else {
                 startChronometer()
@@ -119,24 +146,42 @@ class TaskTimerFragment : Fragment() {
         }
 
         chronometer.setOnClickListener {
-            val keyframeTwo = ConstraintSet()
-            keyframeTwo.clone(context, R.layout.fragment_task_timer_2)
-            TransitionManager.beginDelayedTransition(fragment_task_timer)
-            keyframeTwo.applyTo(fragment_task_timer)
+            validateFocusMode()
         }
 
         clock_of_task_timer.setOnClickListener {
-            val keyframeTwo = ConstraintSet()
-            keyframeTwo.clone(context, R.layout.fragment_task_timer_land_content)
-            TransitionManager.beginDelayedTransition(fragment_task_timer)
-            keyframeTwo.applyTo(fragment_task_timer)
-            fab_stop_task_timer.show()
+            validateFocusMode()
         }
     }
 
+    private fun validateFocusMode() {
+        if (chronometerViewModel.focusMode) {
+            chronometerViewModel.focusMode = false
+            hideFocusMode()
+        } else {
+            chronometerViewModel.focusMode = true
+            showFocusMode()
+        }
+    }
+
+    private fun showFocusMode() {
+        val keyframeTwo = ConstraintSet()
+        keyframeTwo.clone(context, R.layout.fragment_task_timer_content_keyframe_2)
+        TransitionManager.beginDelayedTransition(fragment_task_timer)
+        keyframeTwo.applyTo(fragment_task_timer)
+    }
+
+    private fun hideFocusMode() {
+        val keyframeTwo = ConstraintSet()
+        keyframeTwo.clone(context, R.layout.fragment_task_timer_content)
+        TransitionManager.beginDelayedTransition(fragment_task_timer)
+        keyframeTwo.applyTo(fragment_task_timer)
+        fab_stop_task_timer.show()
+    }
+
     private fun startChronometer() {
-        if (chronometerViewModel?.chronometerIsRunning == false) {
-            chronometerViewModel?.beforeItWasOnPause = true
+        if (chronometerViewModel.chronometerIsRunning == false) {
+            chronometerViewModel.beforeItWasOnPause = true
         }
 
         clock_of_task_timer?.animateIndeterminate()
@@ -145,11 +190,11 @@ class TaskTimerFragment : Fragment() {
         chronometer.base = SystemClock.elapsedRealtime() + chronometerViewModel!!.timeWhenPause
         chronometer.start()
         chronometerViewModel!!.timeWhenPause = 0
-        chronometerViewModel?.chronometerIsRunning = true
+        chronometerViewModel.chronometerIsRunning = true
 
-        if (chronometerViewModel?.base == null) {
+        if (chronometerViewModel.base == null) {
             Log.d(TAG, "chronometer.base: ${chronometer.base}")
-            chronometerViewModel?.base = chronometer.base
+            chronometerViewModel.base = chronometer.base
         }
     }
 
@@ -157,16 +202,16 @@ class TaskTimerFragment : Fragment() {
         clock_of_task_timer?.stop()
         fab_play_task_timer.setImageResource(R.drawable.ic_play_button_24dp)
         fab_stop_task_timer.show()
-        chronometerViewModel?.beforeItWasOnPause = false
+        chronometerViewModel.beforeItWasOnPause = false
     }
 
     private fun pauseChronometer2() {
         clock_of_task_timer.stop()
         fab_play_task_timer.setImageResource(R.drawable.ic_play_button_24dp)
-        chronometerViewModel?.timeWhenPause = chronometer.base - SystemClock.elapsedRealtime()
-        chronometerViewModel?.chronometerIsRunning = false
+        chronometerViewModel.timeWhenPause = chronometer.base - SystemClock.elapsedRealtime()
+        chronometerViewModel.chronometerIsRunning = false
         chronometer.stop()
-        chronometerViewModel?.beforeItWasOnPause = false
+        chronometerViewModel.beforeItWasOnPause = false
     }
 
     private fun stopChronometer() {
@@ -177,14 +222,14 @@ class TaskTimerFragment : Fragment() {
         val taskName = edtx_task.editText?.text ?: ""
 
         chronometer.stop()
-        chronometerViewModel?.insertTask(Task(taskName.toString(), chronometer.text as String, false))
+        chronometerViewModel.insertTask(Task(taskName.toString(), chronometer.text as String, false))
         chronometer.text = "00:00:00"
         chronometerViewModel!!.timeWhenPause = 0
-        chronometerViewModel?.chronometerIsRunning = false
-        chronometerViewModel?.base = null
+        chronometerViewModel.chronometerIsRunning = false
+        chronometerViewModel.base = null
         edtx_task.editText?.text = Editable.Factory.getInstance().newEditable("")
         txtv_task_label.text = ""
-        chronometerViewModel?.beforeItWasOnPause = false
+        chronometerViewModel.beforeItWasOnPause = false
     }
 
     private fun initializeRecyclerView(tasks : ArrayList<Task>) {
@@ -230,18 +275,17 @@ class TaskTimerFragment : Fragment() {
         /** Set last fragment */
         mainViewModel?.lastFragment = TAG
 
-        if (chronometerViewModel?.chronometerIsRunning == false && chronometer.text != "00:00:00") {
-            chronometerViewModel?.base = chronometer.base
+        if (chronometerViewModel.chronometerIsRunning == false && chronometer.text != "00:00:00") {
+            chronometerViewModel.base = chronometer.base
         }
 
-        if (chronometerViewModel?.chronometerIsRunning == true && chronometerViewModel?.beforeItWasOnPause == true) {
-            chronometerViewModel?.base = chronometer.base
-        } else if (chronometerViewModel?.chronometerIsRunning == true) {
-            chronometerViewModel?.timeWhenPause = chronometerViewModel?.base ?: 0 - SystemClock.elapsedRealtime()
+        if (chronometerViewModel.chronometerIsRunning == true && chronometerViewModel.beforeItWasOnPause == true) {
+            chronometerViewModel.base = chronometer.base
+        } else if (chronometerViewModel.chronometerIsRunning == true) {
+            chronometerViewModel.timeWhenPause = chronometerViewModel.base ?: 0 - SystemClock.elapsedRealtime()
         }
 
-        chronometerViewModel?.lastTimeString = chronometer.text as String
-        chronometerViewModel?.taskName = edtx_task.editText?.text
+        chronometerViewModel.lastTimeString = chronometer.text as String
         handler.removeCallbacksAndMessages(null)
     }
 }

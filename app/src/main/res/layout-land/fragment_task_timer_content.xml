@@ -12,7 +12,7 @@
         android:id="@+id/txtv_title_task_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Task timer"
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:minHeight="106dp"
+        android:minHeight="80dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
@@ -106,27 +106,48 @@
         app:srcCompat="@drawable/ic_stop_black_24dp"
         tools:visibility="visible" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <EditText
         android:id="@+id/edtx_task"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:theme="@style/MyTextInputLayout"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_txti_label"
+        android:drawableStart="@drawable/ic_label_white_24dp"
+        android:drawablePadding="8dp"
+        android:fontFamily="sans-serif-light"
+        android:hint="Label"
+        android:inputType="text"
+        android:padding="8dp"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/rcv_tasks">
+        app:layout_constraintTop_toBottomOf="@+id/rcv_tasks"
+        android:importantForAutofill="no" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_label_white_24dp"
-            android:drawablePadding="8dp"
-            android:fontFamily="sans-serif-light"
-            android:hint="Label"
-            android:inputType="text"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/edtx_task"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:background="@drawable/bg_txti_label"-->
+<!--        android:theme="@style/MyTextInputLayout"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/guideline"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/guideline4"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/rcv_tasks">-->
+
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:drawableStart="@drawable/ic_label_white_24dp"-->
+<!--            android:drawablePadding="8dp"-->
+<!--            android:fontFamily="sans-serif-light"-->
+<!--            android:hint="Label"-->
+<!--            android:inputType="text"-->
+<!--            android:textColor="@color/colorWhite"-->
+<!--            android:textSize="18sp" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
     <TextView
         android:id="@+id/txtv_tasks_empty"

@@ -60,7 +60,7 @@ class TaskTimerFragment : Fragment() {
 
         initChronometer()
 
-        edtx_task.editText!!.addTextChangedListener(object: TextWatcher {
+        edtx_task.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
                 val text = editable?.toString() ?: ""
 
@@ -79,7 +79,7 @@ class TaskTimerFragment : Fragment() {
         })
 
         if (chronometerViewModel.taskName.value != null) {
-            edtx_task.editText?.text = chronometerViewModel.taskName.value?.toEditable()
+            edtx_task.text = chronometerViewModel.taskName.value?.toEditable()
             txtv_task_label.text = chronometerViewModel.taskName.value
         }
 
@@ -219,7 +219,7 @@ class TaskTimerFragment : Fragment() {
         fab_stop_task_timer.hide()
         fab_play_task_timer.setImageResource(R.drawable.ic_play_button_24dp)
         chronometerViewModel!!.lastTimeString = "00:00:00"
-        val taskName = edtx_task.editText?.text ?: ""
+        val taskName = edtx_task.text ?: ""
 
         chronometer.stop()
         chronometerViewModel.insertTask(Task(taskName.toString(), chronometer.text as String, false))
@@ -227,7 +227,7 @@ class TaskTimerFragment : Fragment() {
         chronometerViewModel!!.timeWhenPause = 0
         chronometerViewModel.chronometerIsRunning = false
         chronometerViewModel.base = null
-        edtx_task.editText?.text = Editable.Factory.getInstance().newEditable("")
+        edtx_task.text = Editable.Factory.getInstance().newEditable("")
         txtv_task_label.text = ""
         chronometerViewModel.beforeItWasOnPause = false
     }

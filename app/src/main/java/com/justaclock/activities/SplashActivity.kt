@@ -21,7 +21,7 @@ class SplashActivity: BaseActivity() {
 
     private fun goToMainActivity() {
         Handler().postDelayed({
-            try{
+            try {
                 startActivity(Intent(this, MainActivity::class.java))
                 overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
 

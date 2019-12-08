@@ -26,7 +26,13 @@
             android:name=".activities.MainActivity"
             android:windowSoftInputMode="adjustPan" />
 
-        <receiver android:name=".receivers.AlarmNotificationReceiver"/>
+        <receiver android:name=".receivers.Alarm_Receiver"/>
+
+        <service
+            android:name=".services.RingtonePlayingService"
+            android:enabled="true"
+            android:stopWithTask="false"/>
+
     </application>
 
 </manifest>
